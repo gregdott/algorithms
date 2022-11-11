@@ -1,7 +1,7 @@
-package Algorithms;
+package algorithms;
 
 import java.util.*;
-import Utils.*;
+
 /**
  * Author: Gregory Dott
  * 18-10-2022

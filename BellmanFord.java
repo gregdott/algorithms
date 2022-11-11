@@ -1,9 +1,8 @@
-package Algorithms;
+package algorithms;
 
 import java.util.*;
-import Utils.Pr;
-import Utils.Graph.WeightedEdge;
-import Utils.Graph.WeightedGraph;
+
+
 
 /*
  * Author: Gregory Dott

@@ -1,6 +1,4 @@
-package Algorithms;
-
-import Utils.Pr;
+package algorithms;
 
 /*
  * Author: Gregory Dott
