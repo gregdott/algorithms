@@ -1,7 +1,5 @@
 import java.util.*;
 
-
-
 /*
  * Author: Gregory Dott
  * 31-10-2022
@@ -16,8 +14,8 @@ import java.util.*;
  * sometimes called the Bellman–Ford–Moore algorithm.
  * ===========================================================================================================================
  * 
- * ^^^ The Wikipedia description's second sentence was clearly written by a non-English speaker. What they are saying there is
- * that it's capability of handling graphs with negative edge weights is the reason that it is slower than Dijkstra's Algo.
+ * ^^^ The Wikipedia description's second sentence might be difficult to understand. As far as I can tell, what they are saying there is
+ * that its capability of handling graphs with negative edge weights is the reason that it is slower than Dijkstra's Algorithm.
  * 
  * Initialisation and basic data structures are pretty much identical to what is used in the implementation of Dijkstra's Algorithm.
  * This algorithm is in fact so similar to Dijkstra's that much of the code is shared between the two implementations.
