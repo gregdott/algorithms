@@ -5,17 +5,12 @@ import java.util.*;
  * Author: Gregory Dott
  * 27-10-2022
  * 
- * Just a simple version of a graph implementation for weighted graphs
- * This was first created for implementing Kruskal's Algorithm
+ * A simple Graph class that can cater for essentially 4 different types of graphs:
  * 
- * For Kruskal's Algorithm we need to create a list of edges that are sorted according to their weights.
- * 
- * TODO This class should probably get extended to be able to deal with unweighted graphs too. Then I can delete Graph.java and do away with a bit of redundant code. 
- * Once we have done this, update TopologicalSort to not require edge weights of 0.
- * TODO GENERALISE!
- * 
- * For Dijkstra's Algorithm we will be using this class now. Are there any modifications needed? Yes. Need to deal with directed graphs
- * Also using for Kahn's Algorithm (for topological sort). This requires a directed graph as well.
+ * undirected & unweighted
+ * undirected & weighted
+ * directed & unweighted
+ * directed & weighted
  * 
  */
 
