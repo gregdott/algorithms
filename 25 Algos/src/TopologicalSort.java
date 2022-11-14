@@ -24,8 +24,8 @@ public class TopologicalSort {
 
     public static void main(String args[]) {
         // In order to avoid having to rework the WeightedGraph class right now, just using it and setting edge weights all to 0
-        int[][] edges =  {{0, 6, 0}, {1, 2, 0}, {1, 4, 0}, {1, 6, 0}, {3, 0, 0}, {3, 4, 0}, {5, 1, 0}, {7, 0, 0}, {7, 1, 0}};
-        Graph wg = new Graph(edges, 8, true, true); // create new directed, weighted graph (true, true)
+        int[][] edges =  {{0, 6}, {1, 2}, {1, 4}, {1, 6}, {3, 0}, {3, 4}, {5, 1}, {7, 0}, {7, 1}};
+        Graph wg = new Graph(edges, 8, true, false); // create new directed, unweighted graph (true, false)
         List<Integer> sortedVertices = kahnTopologicalSort(wg);
         Pr.x(sortedVertices.toString());
     }
