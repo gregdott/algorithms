@@ -20,19 +20,24 @@ import java.util.*;
  * Initialisation and basic data structures are pretty much identical to what is used in the implementation of Dijkstra's Algorithm.
  * This algorithm is in fact so similar to Dijkstra's that much of the code is shared between the two implementations.
  * 
+ * ------------------------------------------------------------------------------------------------------------------------------------------
+ * If you want to get the shortest paths between all vertices in the graph, just loop through vertices and call calculateShortestPaths()
+ * with the current vertex as startVertex. Also, make sure when changing edge data that the numVertices value correctly reflects the
+ * number of vertices in the graph.
+ * ------------------------------------------------------------------------------------------------------------------------------------------
  */
 
 public class BellmanFord {
     public static void main(String args[]) {
-        int[] dist, prev;
         //int[][] edges = {{0, 1, 10}, {0, 4, 3}, {1, 2, 2}, {1, 4, -4}, {2, 3, 9}, {3, 2, 7}, {4, 1, 1}, {4, 2, 8}, {4, 3, 2}}; // for negative cycle testing
+        //int[][] edges = {{0, 1, -1}, {0, 2, 4}, {1, 2, 3}, {1, 3, 2}, {1, 4, 2}, {3, 2, 5}, {3, 1, 1}, {4, 3, -3 }};
         int[][] edges = {{0, 1, 10}, {0, 4, 3}, {1, 2, 2}, {1, 4, 4}, {2, 3, 9}, {3, 2, 7}, {4, 1, 1}, {4, 2, 8}, {4, 3, 2}};
 
-        int numVertices = 5;
-        int startVertex = 0;
+        int numVertices = 5; // the number of vertices in the graph (we can't just assume that the graph is connected so we can not simply deduce this from the edges)
+        int startVertex = 0; // the vertex from which we are calculating the shortest paths to all the other vertices
         Graph wg = new Graph(edges, numVertices, true, true); // create new directed, weighted graph (true, true)
-        dist = new int[numVertices];
-        prev = new int[numVertices];
+        int[] dist = new int[numVertices]; // array storing distances for each vertex to startVertex. This gets progressively refined during execution.
+        int[] prev = new int[numVertices]; // array storing the previous vertex along the path to the vertex at i corresponding with the current shortest path
 
         boolean noNegativeCycles = calculateShortestPaths(dist, prev, wg, startVertex);
 
@@ -57,11 +62,13 @@ public class BellmanFord {
         
         initDataStructures(dist, prev, startVertex); // initialise the data structures we are using
         List<Edge> edgeList = wg.getEdgeList();
-        for (int i = 0; i < dist.length - 1; i++) {
+        // iterate n-1 times, where n is the number of nodes. This ensures that we investigate all possible routes from startVertex to the other vertices
+        for (int i = 0; i < dist.length - 1; i++) { 
             for (Edge edge: edgeList) {
-                if (dist[edge.getSource()] + edge.getWeight() < dist[edge.getDest()]) {
+                // If the distance of the path along the current edge is less than what we have calculated along another path to the current dest vertex
+                if (dist[edge.getSource()] + edge.getWeight() < dist[edge.getDest()]) { 
                     dist[edge.getDest()] = dist[edge.getSource()] + edge.getWeight();
-                    prev[edge.getDest()] = edge.getSource();
+                    prev[edge.getDest()] = edge.getSource(); // record the new path to the dest vertex
                 }
             }
         }
