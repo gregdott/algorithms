@@ -23,38 +23,42 @@ import java.util.*;
 public class TopologicalSort {
 
     public static void main(String args[]) {
-        // In order to avoid having to rework the WeightedGraph class right now, just using it and setting edge weights all to 0
         int[][] edges =  {{0, 6}, {1, 2}, {1, 4}, {1, 6}, {3, 0}, {3, 4}, {5, 1}, {7, 0}, {7, 1}};
-        Graph wg = new Graph(edges, 8, true, false); // create new directed, unweighted graph (true, false)
-        List<Integer> sortedVertices = kahnTopologicalSort(wg);
+        Graph g = new Graph(edges, 8, true, false); // create new directed, unweighted graph (true, false)
+        List<Integer> sortedVertices = kahnTopologicalSort(g);
         Pr.x(sortedVertices.toString());
     }
     
-    private static List<Integer> kahnTopologicalSort(Graph wg) {
+    /**
+     * 
+     * @param g Graph object
+     * @return
+     */
+    private static List<Integer> kahnTopologicalSort(Graph g) {
         List<Integer> sortedVertices = new ArrayList<Integer>();
         List<Integer> noIncomingEdge = new ArrayList<Integer>(); // list of vertices with no incoming edge
-        getVerticesWithNoIncomingEdges(wg, noIncomingEdge, sortedVertices); // list of vertices with no incoming edge
+        getVerticesWithNoIncomingEdges(g, noIncomingEdge, sortedVertices); // list of vertices with no incoming edge
         
         while (!noIncomingEdge.isEmpty()) {
             int vertex = noIncomingEdge.get(0);
             sortedVertices.add(vertex);
             noIncomingEdge.remove(0);
             // remove all edges coming from this vertex now...
-            removeEdgesForVertex(vertex, wg);
-            getVerticesWithNoIncomingEdges(wg, noIncomingEdge, sortedVertices); // update list of vertices to visit next after having removed edges from previous vertex
+            removeEdgesForVertex(vertex, g);
+            getVerticesWithNoIncomingEdges(g, noIncomingEdge, sortedVertices); // update list of vertices to visit next after having removed edges from previous vertex
         }
 
         return sortedVertices;
     }
 
     /**
-     * removeEdgesForVertex - removes the outgoing edges from vertex in the graph wg
+     * removeEdgesForVertex - removes the outgoing edges from vertex in the graph g
      * 
      * @param vertex the vertex for which we want to remove all outgoing edges
-     * @param wg WeightedGraph object
+     * @param g Graph object
      */
-    private static void removeEdgesForVertex(int vertex, Graph wg) {
-        List<Edge> edgeList = wg.getEdgeList();
+    private static void removeEdgesForVertex(int vertex, Graph g) {
+        List<Edge> edgeList = g.getEdgeList();
         List<Edge> toRemove = new ArrayList<Edge>();
         for (Edge edge: edgeList) {
             if (edge.getSource() == vertex) {
@@ -63,7 +67,7 @@ public class TopologicalSort {
         }
         // Seeing as we are using the enhanced for-loop we can't just remove the edge while looping as this will cause a concurrent modification exception
         edgeList.removeAll(toRemove);
-        wg.updateAdjList();
+        g.updateAdjList();
     }
 
     /**
@@ -72,12 +76,12 @@ public class TopologicalSort {
      * adjacency list in that case. Probably less processing, but makes graph class a touch more confusing, so doing
      * it this way.
      * 
-     * @param wg WeightedGraph object containing our graph data
+     * @param g Graph object containing our graph data
      * @return
      */
-    private static void getVerticesWithNoIncomingEdges(Graph wg, List<Integer> noIncomingEdge, List<Integer> sortedVertices) {
-        List<List<Integer>> adjList = wg.getAdjList();
-        List<Integer> nodeList = new ArrayList<Integer>(wg.getNodeList());
+    private static void getVerticesWithNoIncomingEdges(Graph g, List<Integer> noIncomingEdge, List<Integer> sortedVertices) {
+        List<List<Integer>> adjList = g.getAdjList();
+        List<Integer> nodeList = new ArrayList<Integer>(g.getNodeList());
 
         for (List<Integer> neighbours: adjList) {
             for (Integer neighbour: neighbours) {
