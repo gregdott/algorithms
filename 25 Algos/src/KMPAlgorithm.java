@@ -43,8 +43,6 @@ public class KMPAlgorithm {
         int[] pmTable = generatePartialMatchTable(w);
         
         while (m <= s.length() - w.length()) { // while we have not exceeded the boundaries of searchable string with respect to w
-            // Pr.x("m: " + m);
-            // Pr.x("i: " + i);
             if (s.charAt(m + i) == w.charAt(i)) {
                 if (i + 1 == w.length()) { // we have matched the full word
                     Pr.x("Found match at index: " + m);
@@ -125,6 +123,5 @@ public class KMPAlgorithm {
         }
 
         return propers;
-        
     }
 }
