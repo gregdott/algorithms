@@ -1,6 +1,5 @@
 import java.util.*;
 
-
 /*
  * Author: Gregory Dott
  * 20-10-2022
@@ -79,12 +78,18 @@ public class BreadthFirstSearch {
         List<Integer> nodesVisited = new ArrayList<Integer>(); // list of nodes visited so far
         List<Integer> nodesToVisit = new ArrayList<Integer>(); // list of nodes to visit (in order)
         List<Integer> nodesNotVisited = new ArrayList<>(g.getNodeList()); // list of nodes not visited yet. we shallow copy so we don't edit what is on the object
-        
+
+        /* nodesToVisit & nodesNotVisited:
+         * nodesToVisit will always be a subset of nodesNotVisited, but not necessarily (almost certainly not in most cases) equal to it.
+         * nodesTovisit keeps track of which nodes we are going to visit next based on the algorithm
+         * nodesNotVisited contains a list of ALL nodes that have not been visited yet. This is for the case where there are disconnects in the graph.
+         * In the case where there are disconnects, we used nodesNotVisited to choose the next node to visit. */
+
         int currentNode;
         
         nodesToVisit.add(startNode);
         
-        while (nodesVisited.size() < g.getNumNodes()) {
+        while (nodesVisited.size() < g.getNumNodes()) { // while we have not visited all nodes in the graph
             if (nodesToVisit.size() == 0) { // we have not yet visited all nodes, but we can go no further from the current node
                 Pr.x("Found a disconnect. Moving to next unvisited node.");
                 currentNode = nodesNotVisited.get(0);
@@ -97,8 +102,6 @@ public class BreadthFirstSearch {
 
             nodesNotVisited.remove(nodesNotVisited.indexOf(currentNode));
             nodesVisited.add(currentNode);
-
-            
             
             List<Integer> neighbours = adjList.get(currentNode);
 
@@ -143,8 +146,6 @@ public class BreadthFirstSearch {
         
         nodesNotVisited.remove(nodesNotVisited.indexOf(currentNode));
         nodesVisited.add(currentNode);
-
-        
 
         List<Integer> neighbours = g.getAdjList().get(currentNode);
 
