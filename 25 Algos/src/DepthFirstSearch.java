@@ -20,12 +20,13 @@ import java.util.*;
  * The basic procedure is this:
  * From start node, go to first neighbour, then proceed to that neighbour's first neighbour
  * and so on until either we can go no further or until we reach a node already visited (graph is not necessarily acyclic)
- * Then, we go back to the previous node and explore other neighbours (if there are any) as far down as possible until traversing up
- * and doing the same. This will be done until all nodes have been visited.
+ * Then, we go back to the previous node and explore other neighbours (if there are any) as far down as possible (in the same 
+ * manner of visiting the first unvisited neighbour of each node along the path).
+ *  This will be done until all nodes have been visited.
  * 
- * In order to keep track of where we are in the graph (so that we can backtrack once we hit a dead end), we use an ArrayList
- * that keeps track of our current path. We also use an ArrayList that keeps track of which nodes we have visited. We need both
- * of these to traverse the graph (at least in this implementation).
+ * In order to keep track of where we are in the graph (so that we can backtrack once we hit a dead end or a cycle), we use 
+ * an ArrayList that keeps track of our current path. We also use an ArrayList that keeps track of which nodes we have visited. 
+ * We need both of these to traverse the graph (at least in this implementation).
  */
 
 public class DepthFirstSearch {
@@ -65,7 +66,7 @@ public class DepthFirstSearch {
 
     /**
     * depthFirstSearchIterative - iterative implementation of the Depth-First Search Algorithm
-    * Prints out nodes visited in order along with the current path
+    * Prints out nodes visited in order along with the current path (stack representing which nodes we travelled along to get to currentNode)
     * Nodes are only considered visited (added to nodesVisited & removed from nodesNotVisited) once we have explored all of their neighbours.
     * 
     * @param g graph containing an adjacency list
@@ -81,7 +82,6 @@ public class DepthFirstSearch {
         currentPath = new ArrayList<Integer>(); // path describing where we started, and which nodes we have travelled along to reach the current node.
         nodesNotVisited = new ArrayList<Integer>(g.getNodeList()); //nodes that we have not visited yet.
         adjList = g.getAdjList();
-        
         currentPath.add(startNode);
 
         // Loop until we have visited all nodes
@@ -95,15 +95,13 @@ public class DepthFirstSearch {
             } else {
                 currentNode = currentPath.get(currentPath.size() - 1); // Get last element on current path. Our current node...
             }
-            
 
             Pr.x("CURRENT NODE: " + currentNode);
-
             List<Integer> neighbours = adjList.get(currentNode);
             boolean allNeighboursVisited = true;
 
             // Loop through neighbours of current node. 
-            // If we have not visited the neighbour, and the neighbour is not on our current path, add it to the current path & continue exploring that node
+            // If we have not visited the neighbour, and the neighbour is not on our current path, add it to the current path & break
             for (Integer neighbour: neighbours) {
                 if (!nodesVisited.contains(neighbour) && !currentPath.contains(neighbour)) {
                     allNeighboursVisited = false;
@@ -119,8 +117,7 @@ public class DepthFirstSearch {
                 }
                 
                 nodesVisited.add(currentNode); // add current node to nodes visited (we have explored all neighbours)
-                
-                nodesNotVisited.remove(nodesNotVisited.indexOf(currentNode)); // remove current node from nodes not visited (and not already removed)
+                nodesNotVisited.remove(nodesNotVisited.indexOf(currentNode)); // remove current node from nodes not visited
             }
 
             Pr.x(currentPath.toString());
@@ -139,7 +136,7 @@ public class DepthFirstSearch {
      * 
      */
     public static void depthFirstSearchRecursive(Graph g, List<Integer> nodesVisited, List<Integer> currentPath, List<Integer> nodesNotVisited) {
-        if (nodesVisited.size() == g.getNumNodes()) { // All nodes have been visited
+        if (nodesVisited.size() == g.getNumNodes()) { // All nodes have been visited (recursion termination condition)
             return;
         }
 
@@ -183,6 +180,6 @@ public class DepthFirstSearch {
 
         Pr.x(currentPath.toString());
 
-        depthFirstSearchRecursive(g, nodesVisited, currentPath, nodesNotVisited);
+        depthFirstSearchRecursive(g, nodesVisited, currentPath, nodesNotVisited); // continue the search
     }
 }
