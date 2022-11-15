@@ -52,6 +52,13 @@ public class SelectionSort {
         return nums;
     }
 
+    /**
+     * selectionSortRecursive - recursive implementation of Selection Sort Algorithm
+     * 
+     * @param nums array of unsorted ints
+     * @param index current array index
+     * @return array of sorted ints
+     */
     private static int[] selectionSortRecursive(int[] nums, int index) {
         if (index >= nums.length) { // we have explored all numbers in array, so it must be sorted now.
             return nums;    
