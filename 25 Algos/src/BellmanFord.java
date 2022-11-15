@@ -56,7 +56,8 @@ public class BellmanFord {
      * @param prev tree structure storing paths to startVertex
      * @param wg weighted graph object
      * @param startVertex the vertex we begin the search from
-     * @throws Exception
+     * @return boolean = false if the graph contains a negative cycle and true if we can adequately calculate the 
+     * shortest paths to all vertices in the graph.
      */
     private static boolean calculateShortestPaths(int[] dist, int[] prev, Graph wg, int startVertex) {
         
@@ -131,7 +132,7 @@ public class BellmanFord {
      * @param startVertex the vertex our search began from
      * @param dest destination vertex
      * @param prev tree structure storing paths to startVertex
-     * @return
+     * @return List<Integer> describing the path from the destination back to startVertex
      */
     private static List<Integer> reconstructPath(int startVertex, int dest, int[] prev) {
         int currentVertex = dest;
