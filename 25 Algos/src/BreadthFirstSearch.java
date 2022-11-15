@@ -27,6 +27,14 @@ import java.util.*;
  * Terminating condition: All nodes have been explored. So we need a list containing explored nodes, along with a list of nodes to explore.
  * Then each iteration we check explored nodes against nodelist and terminate if they contain the same elements. size() gives quickest reflection.
  * 
+ * --------------------------------------------------------------------------------------------------------------------------------------------------
+ * A note regarding two of the arrays used (nodesToVisit & nodesNotVisited):
+ * nodesToVisit will always be a subset of nodesNotVisited, but not necessarily (almost certainly not in most cases) equal to it.
+ * nodesTovisit keeps track of which nodes we are going to visit next based on the algorithm
+ * nodesNotVisited contains a list of ALL nodes that have not been visited yet. This is for the case where there are disconnects in the graph.
+ * In the case where there are disconnects, we used nodesNotVisited to choose the next node to visit. 
+ * --------------------------------------------------------------------------------------------------------------------------------------------------
+ * 
  * TODO: related to this... an animation of the Breadth-First search using AWT & Swing. Can do this once I've established a suitable way of 
  * drawing arbitrary graphs in the Bible Loops project
  */
@@ -78,13 +86,6 @@ public class BreadthFirstSearch {
         List<Integer> nodesVisited = new ArrayList<Integer>(); // list of nodes visited so far
         List<Integer> nodesToVisit = new ArrayList<Integer>(); // list of nodes to visit (in order)
         List<Integer> nodesNotVisited = new ArrayList<>(g.getNodeList()); // list of nodes not visited yet. we shallow copy so we don't edit what is on the object
-
-        /* nodesToVisit & nodesNotVisited:
-         * nodesToVisit will always be a subset of nodesNotVisited, but not necessarily (almost certainly not in most cases) equal to it.
-         * nodesTovisit keeps track of which nodes we are going to visit next based on the algorithm
-         * nodesNotVisited contains a list of ALL nodes that have not been visited yet. This is for the case where there are disconnects in the graph.
-         * In the case where there are disconnects, we used nodesNotVisited to choose the next node to visit. */
-
         int currentNode;
         
         nodesToVisit.add(startNode);
