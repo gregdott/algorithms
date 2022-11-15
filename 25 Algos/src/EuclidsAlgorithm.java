@@ -11,6 +11,7 @@
  * and is a part of many other number-theoretic and cryptographic calculations.
  * ================================================================================================================================================
  * 
+ * TODO: explanations of why each method actually works.
  */
 
 public class EuclidsAlgorithm {
@@ -23,6 +24,7 @@ public class EuclidsAlgorithm {
         Pr.x("GCD rec: " + gcdRec(a, b));
     }
 
+    // Calculate greatest common divisor using subtraction
     private static int gcdSub(int a, int b) {
         while (a != b) {
             if (a > b) {
@@ -35,6 +37,7 @@ public class EuclidsAlgorithm {
         return a;
     }
 
+    // Calculate greatest common divisor using division
     private static int gcdDiv(int a, int b) {
         while (b != 0) {
             int tmp = b;
@@ -44,6 +47,7 @@ public class EuclidsAlgorithm {
         return a;
     }
 
+    // Calculate greatest common divisor using recursion (combined with division)
     private static int gcdRec(int a, int b) {
         if (b == 0) {
             return a;
