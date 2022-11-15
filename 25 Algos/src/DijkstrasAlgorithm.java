@@ -1,6 +1,5 @@
 import java.util.*;
 
-
 /*
  * Author: Gregory Dott
  * 30-10-2022
@@ -18,12 +17,13 @@ import java.util.*;
  * This implementation will find the shortest-path tree for a given graph.
  * 
  * We need the following data structures:
- * - dist[i] which stores distances from source to vertex i. 
- * - prev[i] which stores the vertex we visited before visiting i. This is essentially our tree as we can track our way back to the source
- *   vertex by following j = prev[i], then we go to prev[j] and so on until we reach the source vertex. Path reconstruction.
+ * - dist[i] which stores distances from source to vertex i. This gets progressively updated and improved as we explore the graph. 
+ * - prev[i] which stores the vertex we visited before visiting i associated with current dist[i]. This is essentially our tree as 
+ *   we can track our way back to the source vertex by following j = prev[i], then we go to prev[j] and so on until we reach the 
+ *   source vertex. Path reconstruction.
  * - unvisited is a list containing vertices that have not been visited yet
  * 
- * It should be noted that it is assumed that there definitely is SOME path from arbitrary node a to arbitrary node b (the graph is connected)
+ * It should be noted that it is assumed that there definitely is SOME path from arbitrary node [a] to arbitrary node [b] (the graph is connected)
  * If a disconnected graph is provided there will be some errors.
  * 
  * TODO: extend functionality to account for disconnected graphs
@@ -33,19 +33,16 @@ import java.util.*;
 public class DijkstrasAlgorithm {
 
     public static void main(String args[]) {
-        int[] dist, prev;
-        List<Integer> unvisited;
         int[][] weightedEdges = {{0, 1, 10}, {0, 4, 3}, {1, 2, 2}, {1, 4, 4}, {2, 3, 9}, {3, 2, 7}, {4, 1, 1}, {4, 2, 8}, {4, 3, 2}};
-
         int numVertices = 5;
         int startVertex = 0;
         Graph wg = new Graph(weightedEdges, numVertices, true, true); // create new directed, weighted graph (true, true)
-        dist = new int[numVertices];
-        prev = new int[numVertices];
-        unvisited = new ArrayList<Integer>();
+        int[] dist = new int[numVertices];
+        int[] prev = new int[numVertices];
+        List<Integer> unvisited = new ArrayList<Integer>();
         
-        calculateShortestPaths(dist, prev, unvisited, wg, startVertex);
-        printShortestPaths(startVertex, dist, prev);
+        calculateShortestPaths(dist, prev, unvisited, wg, startVertex); // do the actual calcluations
+        printShortestPaths(startVertex, dist, prev); // backtrack through the graph to figure out the paths
     }
 
     /**
@@ -134,7 +131,7 @@ public class DijkstrasAlgorithm {
      * @param startVertex the vertex our search began from
      * @param dest destination vertex
      * @param prev tree structure storing paths to startVertex
-     * @return
+     * @return List<Integer> describing the shortest path from dest to startVertex
      */
     private static List<Integer> reconstructPath(int startVertex, int dest, int[] prev) {
         int currentVertex = dest;
@@ -148,8 +145,4 @@ public class DijkstrasAlgorithm {
 
         return path;
     }
-
-    
 }
-
-
