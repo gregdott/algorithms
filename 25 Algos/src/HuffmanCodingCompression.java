@@ -19,7 +19,7 @@ import java.util.*;
  * 
  * Thanks Tom...
  * 
- * To be honest, Tom's video was more useful in understanding Huffman Encoding than anything else. This implementation
+ * To be honest, Tom's video was more useful (for me) in understanding Huffman Encoding than anything else. This implementation
  * was based pretty much entirely on what I learnt from his video.
  * --------------------------------------------------------------------------------------------------------------------------
  * The current implementation creates a tree as a linked list. Because it is a binary tree however, we could store it in an array.
@@ -166,7 +166,6 @@ public class HuffmanCodingCompression {
 
         return decoded;
     }
-
     
     /**
      * encodeString - encode string using Huffman Tree
