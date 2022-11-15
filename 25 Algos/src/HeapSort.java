@@ -35,9 +35,10 @@ public class HeapSort {
         //int[] nums = {6, 4, 7, 1, 9, -2, 99};
         int[] nums = {6, 4, 7, 999, 1, 9, -2, 99, 31, 2, 400, 19, 54, 361, 20, 22, 27, 33, 36, 45};
         Pr.x("Unsorted: " + Arrays.toString(nums));
-
+        
         int[] sorted = heapsort(nums);
         Pr.x("Sorted: " + Arrays.toString(sorted));
+        
     }
 
     /**
