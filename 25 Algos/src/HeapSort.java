@@ -37,7 +37,6 @@ public class HeapSort {
         
         int[] sorted = heapsort(nums);
         Pr.x("Sorted: " + Arrays.toString(sorted));
-        
     }
 
     /**
@@ -59,8 +58,6 @@ public class HeapSort {
 
         return maxHeap;
     }
-
-    
 
     /**
      * siftDown - repair the tree after having modified it. Make sure that it retains the max heap property
