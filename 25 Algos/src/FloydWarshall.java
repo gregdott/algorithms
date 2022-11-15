@@ -27,6 +27,16 @@ public class FloydWarshall {
         reconstructPath(0, 1, vertexConnections); // reconstruct path from node 0 to node 1
     }
 
+    /**
+     * initDistanceMatrix - initialise the distance matrix. First sets all distances between pairs of vertices to 'infinity'.
+     * Then, for each edge in our graph, set the distance between the two nodes on either side of the edge in distanceMatrix 
+     * to the weight of that edge. Also set initial paths described by edges. Then set distances in distanceMatrix and path
+     * in vertexConnections for the diagonals.
+     * 
+     * @param distanceMatrix // keeps track of current shortest path between sets of vertices
+     * @param weightedEdges array of weighted edges
+     * @param vertexConnections // keeps track of the current path between vertices
+     */
     private static void initDistanceMatrix(int[][] distanceMatrix, int[][] weightedEdges, int[][] vertexConnections) {
         // Initialise all distances between vertices to be Integer.MAX_VALUE to begin - this is to approximate infinity.
         // Important: before adding anything to a value, we will need to check if it is equal to Integer.MAX_VALUE. 
@@ -51,7 +61,12 @@ public class FloydWarshall {
     }
 
     /**
-     * calculateShortestPaths
+     * calculateShortestPaths - this basically explores all possible paths between nodes sequentially and compares
+     * new distances with old distances. If new distances are less, we update the distance and the path.
+     * 
+     * We also check for negative cycles and abort if any are found, as we can not find a valid shortest path
+     * when there are negative cycles in the graph (by folowing the cycle another time we can always decrease the
+     * 'length' of the path).
      * 
      * @param distanceMatrix holds values representing distance (or cost!) between vertices
      * @param vertexConnections holds values representing current path associated with min distance in distanceMatrix
@@ -83,7 +98,7 @@ public class FloydWarshall {
     }
 
     /**
-     * reconstructPath
+     * reconstructPath - rebuild the shortest path between 2 vertices
      * 
      * @param i source vertex
      * @param j destination vertex
